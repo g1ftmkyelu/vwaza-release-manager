@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif; /* Or any clean sans-serif font */
+    @apply bg-dark-bg-primary text-gray-100;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-bg-secondary;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-lime-accent/50;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-lime-accent;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/20;
+  }
+
+  .glass-input {
+    @apply bg-white/5 border border-white/10 text-gray-100 placeholder-gray-400 focus:ring-lime-accent focus:border-lime-accent;
+  }
+
+  .glass-button {
+    @apply bg-lime-accent/10 border border-lime-accent/30 text-lime-light hover:bg-lime-accent/20 hover:shadow-lime-glow-sm transition-all duration-300;
+  }
+
+  .glass-button-primary {
+    @apply bg-lime-accent text-dark-bg-primary hover:bg-lime-light hover:shadow-lime-glow transition-all duration-300;
+  }
+
+  .glass-button-secondary {
+    @apply bg-white/10 text-gray-100 border border-white/20 hover:bg-white/20 hover:shadow-lime-glow-sm transition-all duration-300;
+  }
+
+  .glass-header {
+    @apply bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20;
+  }
+
+  .glass-sidebar {
+    @apply bg-white/5 backdrop-blur-xl border-r border-white/10 shadow-lg shadow-black/20;
+  }
+
+  .glow-text-lime {
+    text-shadow: 0 0 8px rgba(132, 204, 22, 0.6);
+  }
+
+  /* Custom scrollbar for specific elements (e.g., horizontal carousels) */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px; /* For horizontal scrollbar */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-dark-bg-secondary;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-lime-accent/50;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-lime-accent;
+  }
+}
