@@ -48,7 +48,7 @@ A full stack application designed to enable artists in managing their music rele
 *   Build Tool: Vite, a next-generation frontend tooling.
 *   Language: TypeScript
 *   Styling: Tailwind CSS, a utility-first CSS framework.
-*   Routing: React Router DOM v6 for declarative navigation.
+*   Routing: React Router DOM v7 for declarative navigation.
 *   Form Management: React Hook Form and Zod for efficient form handling and schema validation.
 *   Notifications: React Hot Toast for beautiful and responsive toast notifications.
 *   Icons: React Icons
