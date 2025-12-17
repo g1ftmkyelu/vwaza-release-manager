@@ -12,9 +12,7 @@ import fastifyCors from '@fastify/cors';
 import { FastifyRateLimitOptions, errorResponseBuilderContext as RateLimitErrorResponseBuilderContext } from '@fastify/rate-limit';
 import { StandardErrorResponse, UserRole } from '../shared/types';
 
-// Load environment variables
-// The .env file is in the project root, but the app runs from the 'server' directory.
-// We need to explicitly tell dotenv to look in the parent directory.
+
 dotenv.config({ path: '../.env' });
 
 // Import plugins and routes
@@ -28,12 +26,11 @@ import releaseRoutes from './routes/releaseRoutes';
 import trackRoutes from './routes/trackRoutes';
 import publicRoutes from './routes/publicRoutes';
 
-// Extend FastifyInstance and FastifyRequest with custom properties
+
 declare module 'fastify' {
   interface FastifyInstance {
     db: Pool;
     cloudinary: typeof cloudinary;
-    // Add sensible's httpErrors to FastifyInstance
     httpErrors: typeof import('@fastify/sensible')['httpErrors'];
   }
   interface FastifyRequest {
@@ -49,12 +46,10 @@ declare module 'fastify' {
   }
 }
 
-// Augment the context type for errorResponseBuilder from @fastify/rate-limit
-// This is needed because the provided error message indicates 'timeWindow' is missing.
-// Although it should be present in @fastify/rate-limit v7, explicit declaration helps.
+
 declare module '@fastify/rate-limit' {
   interface errorResponseBuilderContext {
-    timeWindow: number; // Explicitly add timeWindow
+    timeWindow: number; 
   }
 }
 
@@ -124,9 +119,9 @@ fastify.register(fastifyRateLimit, {
     };
   },
 });
-fastify.register(fastifySensible); // Register fastify-sensible for standardized HTTP errors
+fastify.register(fastifySensible); 
 
-// NEW: Register CORS plugin to handle cross-origin requests and OPTIONS preflights
+
 fastify.register(fastifyCors, {
   origin: 'http://localhost:3000', // Allow requests from your frontend development server
   credentials: true, // Allow sending cookies and authorization headers
@@ -170,7 +165,7 @@ fastify.setErrorHandler((error, request, reply) => {
     errorName = 'Forbidden';
     errorMessage = 'You do not have permission to access this resource.';
     details = error.message;
-  } else if (error.statusCode) { // Catch other HTTP errors thrown by sensible or custom
+  } else if (error.statusCode) { 
     errorMessage = error.message;
     errorName = error.name;
     details = error.message;
@@ -203,7 +198,7 @@ fastify.register(releaseRoutes, { prefix: '/releases' });
 fastify.register(trackRoutes, { prefix: '/tracks' });
 fastify.register(publicRoutes, { prefix: '/public' });
 
-// Declare a route
+
 fastify.get('/', async (request, reply) => {
   return { hello: 'Vwaza Release Manager API' };
 });
@@ -212,31 +207,31 @@ fastify.get('/health', async (request, reply) => {
   try {
     await fastify.db.query('SELECT 1');
     return { status: 'ok', database: 'connected', timestamp: new Date().toISOString() };
-  } catch (error: unknown) { // Use unknown for catch block errors
+  } catch (error: unknown) { 
     fastify.log.error({ message: 'Database health check failed:', error: error });
-    // Throw an error to be caught by the global error handler
+
     throw fastify.httpErrors.internalServerError(`Database connection failed: ${(error as Error).message}`);
   }
 });
 
-// Add favicon route to stop 404 logs
+
 fastify.get('/favicon.ico', async (request, reply) => {
   reply.code(204).send();
 });
 
-// Run the server!
+
 const start = async () => {
   try {
     await fastify.listen({ port: parseInt(process.env.PORT || '6155'), host: '0.0.0.0' });
     fastify.log.info(`Swagger UI available at http://localhost:${process.env.PORT || '6155'}/documentation`);
     
-    // Print registered routes for debugging
+  
     fastify.ready(() => {
       console.log('\n=== Registered Routes ===');
       console.log(fastify.printRoutes());
       console.log('========================\n');
     });
-  } catch (err: unknown) { // Use unknown for catch block errors
+  } catch (err: unknown) { 
     fastify.log.error({ message: 'Failed to start server:', error: err });
     process.exit(1);
   }
