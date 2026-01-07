@@ -223,7 +223,7 @@ npm test
 
 ## Contributing
 
-We welcome contributions to the Muzik Release Manager 🎵
+We welcome contributions to the Muzik Release Manager 
 
 Please read the **[CONTRIBUTING.md](./CONTRIBUTING.md)** file for complete contribution guidelines, including:
 
